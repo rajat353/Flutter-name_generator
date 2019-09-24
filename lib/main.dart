@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
+import 'package:english_words/english_words.dart';
 
 void main() {
   runApp(MaterialApp(debugShowCheckedModeBanner: false, home: NameGenerator()));
@@ -32,21 +32,26 @@ class NameGeneratorState extends State<NameGenerator> {
   }
 }
 
-List<String> getName() {
-  var item = List<String>.generate(1000, (counter) => "Item $counter");
+WordPair getName() {
+  var item = WordPair.random();
   return item;
 }
 
 Widget getList() {
-  var data = getName();
+  final data = <WordPair>[];
   var list = ListView.builder(itemBuilder: (context, index) {
-     if(index.isOdd) return Divider(height: 1.0, color: Colors.white,);
+    if (index.isOdd)
+      return Divider(
+        height: 1.0,
+        color: Colors.white,
+      );
+    index = index ~/ 2;
+    data.add(getName());
     return ListTile(
       title: Text(
-        data[index],
+        data[index].asPascalCase,
         style: TextStyle(color: Colors.white),
       ),
-      
     );
   });
   return list;
