@@ -14,6 +14,60 @@ class NameGenerator extends StatefulWidget {
 }
 
 class NameGeneratorState extends State<NameGenerator> {
+  var data = <WordPair>[];
+  var isFav=<bool>[];
+  var i;
+  WordPair getName() {
+  var item = WordPair.random();
+  return item;
+}
+// void _toggleFavorite() {
+//     setState(() {
+      
+      
+//     });
+//   }
+
+  Widget getList() {
+  
+  var list = ListView.builder(itemBuilder: (context, index) {
+    if (index.isOdd)
+      return Divider(
+        height: 1.0,
+        color: Colors.white,
+      );
+    index = index ~/ 2;
+    // i=index;
+    data.add(getName());
+    //print(data);
+    isFav.add(false);
+    //print(data1);
+    //print(i);
+
+    
+    return ListTile(
+      title: Text(
+        data[index].asPascalCase,
+        style: TextStyle(color: Colors.white),
+      ),
+      trailing: IconButton(
+        icon: isFav[index]
+            ? Icon(Icons.favorite, color: Colors.white)
+            : Icon(
+                Icons.favorite_border,
+                color: Colors.white,
+              ),
+        onPressed: (){
+          print(index);
+          setState(() {
+           isFav[index]=!isFav[index]; 
+          });
+        },
+      ),
+    );
+  });
+ return list;
+}
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -32,27 +86,5 @@ class NameGeneratorState extends State<NameGenerator> {
   }
 }
 
-WordPair getName() {
-  var item = WordPair.random();
-  return item;
-}
 
-Widget getList() {
-  final data = <WordPair>[];
-  var list = ListView.builder(itemBuilder: (context, index) {
-    if (index.isOdd)
-      return Divider(
-        height: 1.0,
-        color: Colors.white,
-      );
-    index = index ~/ 2;
-    data.add(getName());
-    return ListTile(
-      title: Text(
-        data[index].asPascalCase,
-        style: TextStyle(color: Colors.white),
-      ),
-    );
-  });
-  return list;
-}
+
